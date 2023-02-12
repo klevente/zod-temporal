@@ -15,10 +15,18 @@ describe('instant', () => {
     },
   );
 
-  test.each([['2023-02-08'], ['2023-02-08T15:32:34']])(
-    'should throw exception if input does not have a timezone',
-    (input) => {
-      expect(() => instant.parse(input)).toThrow();
-    },
-  );
+  test.each([
+    ['2023-02-08'],
+    ['2023-02-08T15:32:34'],
+    ['2023-13-12T15:32:34Z'],
+    ['2023-02-30T15:32:32Z'],
+    ['2023-02-08T25:32:34Z'],
+    ['2023-02-08T15:64:34Z'],
+    ['2023-02-08T15:32:64Z'],
+    ['2023-02-08T15:32:34+2400'],
+    ['2023-02-08T15:32:34-2400'],
+    ['2023Z'],
+  ])('should throw exception if input is malformed', (input) => {
+    expect(() => instant.parse(input)).toThrow();
+  });
 });
